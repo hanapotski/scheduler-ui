@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Signin from './Signin';
 import AllEvents from './AllEvents';
 
-export default () => {
-  const [loggedIn, setLogin] = useState(false);
-  return <>{loggedIn ? <AllEvents /> : <Signin setLogin={setLogin} />}</>;
+export default (props) => {
+  const userData = getCachedUserData();
+
+  return <>{!!userData ? <AllEvents /> : <Signin />}</>;
 };
+
+function getCachedUserData() {
+  return localStorage.getItem('schedulerAppUser') || null;
+}

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 const SIGNUP_URL = 'http://localhost:8000/signup';
 
-export default ({ setLogin }) => {
+export default () => {
   const history = useHistory();
 
   const [email, setEmail] = useState('');
@@ -20,9 +20,10 @@ export default ({ setLogin }) => {
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .then(({ message }) => message);
+      .then((data) => data);
 
-    if (response === 'success') {
+    if (response.message === 'success') {
+      localStorage.setItem('schedulerAppUser', JSON.stringify(response.data));
       history.push('/');
     }
   };
