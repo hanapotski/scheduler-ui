@@ -2,7 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AllEvents from './views/AllEvents';
 import Home from './views/Home';
+
 import Event from './views/Event';
+import Signup from './views/Signup';
 
 function App() {
   return (
@@ -13,6 +15,9 @@ function App() {
         </Route>
         <Route path="/events/:id">
           <Event />
+        </Route>
+        <Route path="/signup">
+          <Signup />
         </Route>
         <Route path="/">
           <Home />
