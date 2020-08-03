@@ -46,7 +46,7 @@ export default () => {
         type="password"
         placeholder="Password"
       />
-      <button type="submit">Submit</button>
+      <button type="submit">Sign Up</button>
     </form>
   );
 };
