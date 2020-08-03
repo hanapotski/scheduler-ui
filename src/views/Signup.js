@@ -47,6 +47,9 @@ export default () => {
         placeholder="Password"
       />
       <button type="submit">Sign Up</button>
+      <button onClick={() => history.push('/signin')}>
+        Already have an Account
+      </button>
     </form>
   );
 };
