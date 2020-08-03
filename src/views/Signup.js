@@ -20,7 +20,8 @@ export default () => {
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .then((data) => data);
+      .then((data) => data)
+      .catch((err) => console.log(err));
 
     if (response.message === 'success') {
       localStorage.setItem('schedulerAppUser', JSON.stringify(response.data));
