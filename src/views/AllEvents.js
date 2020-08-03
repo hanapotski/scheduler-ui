@@ -1,6 +1,7 @@
 import React from 'react';
 import Event from './Event';
-
+import { getCachedUserData } from '../helpers';
+import { useHistory } from 'react-router-dom';
 const mockData = [
   {
     id: '123',
@@ -21,6 +22,13 @@ const mockData = [
   },
 ];
 export default () => {
+  const history = useHistory();
+
+  const user = getCachedUserData();
+  if (!user) {
+    history.push('/');
+  }
+
   return (
     <>
       <h1>Schedule</h1>
