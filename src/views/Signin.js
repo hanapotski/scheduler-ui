@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 const SIGNIN_URL = 'http://localhost:8000/signin';
 
 export default ({ setLogin }) => {
   const history = useHistory();
+  const form = useRef(null);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [invalid, setInvalid] = useState(true);
+
+  useEffect(() => {
+    for (let input of form.current) {
+      if (
+        (input.type === 'email' || input.type === 'password') &&
+        input.validity.valid
+      ) {
+        setInvalid(false);
+      }
+    }
+  }, [email, password]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,6 +49,7 @@ export default ({ setLogin }) => {
       <form
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
         onSubmit={handleSubmit}
+        ref={form}
       >
         <div class="mb-4">
           <label
@@ -49,8 +63,10 @@ export default ({ setLogin }) => {
             value={email}
             onChange={({ target }) => setEmail(target.value)}
             id="email"
+            name="email"
             type="email"
             placeholder="Email"
+            required
           />
         </div>
         <div class="mb-6">
@@ -65,8 +81,10 @@ export default ({ setLogin }) => {
             value={password}
             onChange={({ target }) => setPassword(target.value)}
             id="password"
+            name="password"
             type="password"
             placeholder="Password"
+            required
           />
           {/* <p class="text-red-500 text-xs italic">Please choose a password.</p> */}
         </div>
@@ -78,8 +96,11 @@ export default ({ setLogin }) => {
             Create an Account
           </button>
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className={`bg-blue-${invalid ? 200 : 500} hover:bg-blue-${
+              invalid ? 200 : 700
+            } text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
             type="submit"
+            disabled={invalid}
           >
             Sign In
           </button>
