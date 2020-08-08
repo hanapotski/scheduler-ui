@@ -13,6 +13,7 @@ export default () => {
   const [invalid, setInvalid] = useState(true);
 
   const [accountPending, setAccountPending] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const valid = [];
@@ -42,6 +43,10 @@ export default () => {
       .then((res) => res.json())
       .then((data) => data)
       .catch((err) => console.log(err));
+
+    if (response.error) {
+      setErrorMessage(response.error);
+    }
 
     if (response.message === 'success') {
       localStorage.setItem('schedulerAppUser', JSON.stringify(response.data));
@@ -102,6 +107,7 @@ export default () => {
             minLength="6"
           />
         </div>
+        <p className="text-red-500 text-xs italic">{errorMessage}</p>
         <div className="flex items-center justify-between">
           <button
             className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"

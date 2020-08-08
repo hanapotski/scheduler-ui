@@ -39,7 +39,7 @@ export default ({ setLogin }) => {
       .catch((err) => console.log(err));
 
     if (response.error) {
-      setErrorMessage(response.message);
+      setErrorMessage(response.error);
     }
 
     if (response.message === 'success') {
