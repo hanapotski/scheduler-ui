@@ -16,17 +16,10 @@ export default () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    const valid = [];
-    if (form && form.current) {
-      for (let input of form.current) {
-        if (
-          (input.type === 'email' || input.type === 'password') &&
-          input.validity.valid
-        ) {
-          valid.push(input.validity.valid);
-        }
-        setInvalid(valid.every((v) => !v));
-      }
+    if (email === '' || password === '') {
+      setInvalid(true);
+    } else {
+      setInvalid(false);
     }
   }, [email, password]);
 
