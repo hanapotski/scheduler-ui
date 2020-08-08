@@ -1,4 +1,10 @@
 export function capitalize(str) {
+  if (str.split(' ').length > 1) {
+    return str
+      .split(' ')
+      .map((word) => `${word[0].toUpperCase()}${word.slice(1)}`)
+      .join(' ');
+  }
   return `${str[0].toUpperCase()}${str.slice(1)}`;
 }
 
