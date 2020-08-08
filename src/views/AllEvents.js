@@ -1,7 +1,7 @@
 import React from 'react';
 import Event from './Event';
 import { getCachedUserData } from '../helpers';
-import { useHistory } from 'react-router-dom';
+import Signin from './Signin';
 const mockData = [
   {
     id: '123',
@@ -22,19 +22,17 @@ const mockData = [
   },
 ];
 export default () => {
-  const history = useHistory();
-
   const user = getCachedUserData();
-  if (!user) {
-    history.push('/');
+  if (user && user.isVerified) {
+    return (
+      <>
+        <h1>Schedule</h1>
+        {mockData.map((event) => (
+          <Event {...event} />
+        ))}
+      </>
+    );
   }
 
-  return (
-    <>
-      <h1>Schedule</h1>
-      {mockData.map((event) => (
-        <Event {...event} />
-      ))}
-    </>
-  );
+  return <Signin />;
 };

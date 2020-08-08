@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import Notification from '../components/Notification';
 
 const SIGNUP_URL = 'http://localhost:8000/signup';
 
@@ -11,13 +12,19 @@ export default () => {
   const [password, setPassword] = useState('');
   const [invalid, setInvalid] = useState(true);
 
+  const [accountPending, setAccountPending] = useState(false);
+
   useEffect(() => {
-    for (let input of form.current) {
-      if (
-        (input.type === 'email' || input.type === 'password') &&
-        input.validity.valid
-      ) {
-        setInvalid(false);
+    const valid = [];
+    if (form && form.current) {
+      for (let input of form.current) {
+        if (
+          (input.type === 'email' || input.type === 'password') &&
+          input.validity.valid
+        ) {
+          valid.push(input.validity.valid);
+        }
+        setInvalid(valid.every((v) => !v));
       }
     }
   }, [email, password]);
@@ -38,9 +45,18 @@ export default () => {
 
     if (response.message === 'success') {
       localStorage.setItem('schedulerAppUser', JSON.stringify(response.data));
-      history.push('/');
+      setAccountPending(true);
     }
   };
+
+  if (accountPending) {
+    return (
+      <Notification
+        heading="Account Pending"
+        message="Please contact the admin."
+      />
+    );
+  }
 
   return (
     <div className="w-full max-w-xs m-4">

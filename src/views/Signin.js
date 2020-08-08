@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import Notification from '../components/Notification';
 
 const SIGNIN_URL = 'http://localhost:8000/signin';
 
@@ -10,15 +11,14 @@ export default ({ setLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [invalid, setInvalid] = useState(true);
+  const [isVerified, setIsVerified] = useState('initial');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    for (let input of form.current) {
-      if (
-        (input.type === 'email' || input.type === 'password') &&
-        input.validity.valid
-      ) {
-        setInvalid(false);
-      }
+    if (email === '' || password === '') {
+      setInvalid(true);
+    } else {
+      setInvalid(false);
     }
   }, [email, password]);
 
@@ -38,11 +38,29 @@ export default ({ setLogin }) => {
       .then((data) => data)
       .catch((err) => console.log(err));
 
-    if (response && response.message === 'success') {
+    if (response.error) {
+      setErrorMessage(response.message);
+    }
+
+    if (response.message === 'success') {
       localStorage.setItem('schedulerAppUser', JSON.stringify(response.data));
-      history.push('/events');
+
+      if (response.data.isVerified) {
+        history.push('/events');
+      }
+
+      setIsVerified(response.data.isVerified);
     }
   };
+
+  if (!isVerified) {
+    return (
+      <Notification
+        heading="Account Pending"
+        message="Please contact the admin."
+      />
+    );
+  }
 
   return (
     <div className="w-full max-w-xs m-4">
@@ -51,7 +69,7 @@ export default ({ setLogin }) => {
         onSubmit={handleSubmit}
         ref={form}
       >
-        <div class="mb-4">
+        <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="email"
@@ -69,7 +87,7 @@ export default ({ setLogin }) => {
             required
           />
         </div>
-        <div class="mb-6">
+        <div className="mb-6">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="password"
@@ -86,8 +104,8 @@ export default ({ setLogin }) => {
             placeholder="Password"
             required
           />
-          {/* <p class="text-red-500 text-xs italic">Please choose a password.</p> */}
         </div>
+        <p className="text-red-500 text-xs italic">{errorMessage}</p>
         <div className="flex items-center justify-between">
           <button
             className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
@@ -106,7 +124,7 @@ export default ({ setLogin }) => {
           </button>
         </div>
       </form>
-      <p class="text-center text-gray-500 text-xs">
+      <p className="text-center text-gray-500 text-xs">
         &copy;2020 HomemadeCoder. All rights reserved.
       </p>
     </div>
