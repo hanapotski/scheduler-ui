@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Notification from '../components/Notification';
 
@@ -6,7 +6,6 @@ const SIGNUP_URL = 'http://localhost:8000/signup';
 
 export default () => {
   const history = useHistory();
-  const form = useRef(null);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -61,7 +60,6 @@ export default () => {
       <form
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
         onSubmit={handleSubmit}
-        ref={form}
       >
         <div className="mb-4">
           <label
@@ -104,7 +102,7 @@ export default () => {
         <div className="flex items-center justify-between">
           <button
             className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-            onClick={() => history.push('/signin')}
+            onClick={() => history.push('/')}
           >
             Sign in
           </button>
