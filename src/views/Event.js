@@ -18,9 +18,9 @@ export default ({
 }) => {
   return (
     <>
-      <div className="max-w-sm w-full lg:max-w-full lg:flex">
-        <div className="border-r border-b border-l border-t border-gray-400 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col leading-normal">
-          <div className="text-left mb-8">
+      <div className="w-full lg:max-w-full lg:flex">
+        <div className="w-full border-r border-b border-l border-t border-gray-400 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col leading-normal">
+          <div className="mb-8">
             <p className="text-sm text-gray-600 flex">
               {eventDate.toLocaleString('en-US', {
                 year: 'numeric',

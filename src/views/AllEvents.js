@@ -39,6 +39,23 @@ const mockData = [
     drums: 'zion',
     other: [{ name: 'lloyd', instrument: 'percussion' }],
   },
+  {
+    id: '123',
+    createdBy: 'hannah joy',
+    createdAt: new Date(),
+    modifiedBy: null,
+    modifiedDate: null,
+    eventDate: new Date(),
+    eventTitle: 'Sunday service',
+    leader: 'Tin',
+    backups: 'alyssa, mark',
+    keys: 'hannah',
+    electricGuitar: 'derick',
+    acousticGuitar: 'euly',
+    bass: 'bricks',
+    drums: 'zion',
+    other: [{ name: 'lloyd', instrument: 'percussion' }],
+  },
 ];
 
 export default () => {
@@ -46,7 +63,7 @@ export default () => {
 
   if (user && user.isVerified) {
     return (
-      <div className="grid grid-cols-3 gap-4 ">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 m-6">
         {mockData.map((event) => (
           <Link to={`/events/${event.id}`}>
             <Event {...event} />
