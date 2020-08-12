@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AllEvents from './views/AllEvents';
 import Home from './views/Home';
 
-import Event from './views/Event';
+import EditEvent from './views/EditEvent';
 import Signup from './views/Signup';
 import MainWrapper from './components/MainWrapper';
 
@@ -12,17 +12,17 @@ function App() {
     <MainWrapper>
       <Router>
         <Switch>
-          <Route path="/events">
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/events">
             <AllEvents />
           </Route>
           <Route path="/events/:id">
-            <Event />
+            <EditEvent />
           </Route>
           <Route path="/signup">
             <Signup />
-          </Route>
-          <Route path="/">
-            <Home />
           </Route>
         </Switch>
       </Router>

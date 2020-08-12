@@ -6,9 +6,11 @@ export default ({
   eventTitle,
   leader,
   backups,
-  keyboardist,
-  guitarists,
-  drummer,
+  keys,
+  electricGuitar,
+  acousticGuitar,
+  bass,
+  drums,
   other,
   modifiedBy,
   createdBy,
@@ -40,27 +42,37 @@ export default ({
                 <span className="pr-4" role="img" aria-label="mic">
                   🎤
                 </span>
-                Backups:{' '}
-                {backups.map((backup) => capitalize(backup)).join(', ')}
+                Backups: {capitalize(backups)}
               </p>
               <p>
                 <span className="pr-4" role="img" aria-label="keyboard">
                   🎹
                 </span>
-                Keyboardist: {capitalize(keyboardist)}
+                Keys: {capitalize(keys)}
               </p>
               <p>
                 <span className="pr-4" role="img" aria-label="drums">
                   🥁
                 </span>
-                Drummer: {capitalize(drummer)}
+                Drums: {capitalize(drums)}
               </p>
               <p>
                 <span className="pr-4" role="img" aria-label="guitar">
                   🎸
                 </span>
-                Guitarists:{' '}
-                {guitarists.map((backup) => capitalize(backup)).join(', ')}
+                Electric Guitar: {capitalize(electricGuitar)}
+              </p>
+              <p>
+                <span className="pr-4" role="img" aria-label="guitar">
+                  🎸
+                </span>
+                Acoustic Guitar: {capitalize(acousticGuitar)}
+              </p>
+              <p>
+                <span className="pr-4" role="img" aria-label="guitar">
+                  🎸
+                </span>
+                Bass: {capitalize(bass)}
               </p>
               {other.map(({ name, instrument }) => (
                 <p>

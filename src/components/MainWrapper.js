@@ -6,7 +6,7 @@ export default function MainWrapper({ children }) {
       <h1 className="text-center m-8 text-blue-500 text-6xl font-extrabold">
         PAW Scheduler
       </h1>
-      <div className="flex">{children}</div>
+      <div className="flex justify-center">{children}</div>
     </div>
   );
 }
