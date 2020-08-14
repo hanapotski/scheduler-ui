@@ -9,8 +9,8 @@ import MainWrapper from './components/MainWrapper';
 
 function App() {
   return (
-    <MainWrapper>
-      <Router>
+    <Router>
+      <MainWrapper>
         <Switch>
           <Route exact path="/">
             <Home />
@@ -25,8 +25,8 @@ function App() {
             <Signup />
           </Route>
         </Switch>
-      </Router>
-    </MainWrapper>
+      </MainWrapper>
+    </Router>
   );
 }
 

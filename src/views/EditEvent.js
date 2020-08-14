@@ -2,34 +2,45 @@ import React, { useState, useEffect } from 'react';
 const nanoid = require('nanoid');
 
 export default () => {
-  const [date, setDate] = useState('');
-  const [eventName, setEventName] = useState('');
-  const [leader, setLeader] = useState('');
-  const [backups, setBackups] = useState('');
-  const [keys, setKeys] = useState('');
-  const [drums, setDrums] = useState('');
-  const [electricGuitar, setElectricGuitar] = useState('');
-  const [acousticGuitar, setAcousticGuitar] = useState('');
-  const [bass, setBass] = useState('');
+  const [data, setData] = useState(DEFAULT_DATA);
   const [other, setOther] = useState([]);
+
+  const {
+    eventDate,
+    eventName,
+    leader,
+    backups,
+    keys,
+    drums,
+    electricGuitar,
+    acousticGuitar,
+    bass,
+  } = data;
 
   const [errorMessage, setErrorMessage] = useState('');
   const [invalid, setInvalid] = useState(true);
 
   useEffect(() => {
-    if (date === '' || leader === '' || eventName === '') {
+    if (eventDate === '' || leader === '' || eventName === '') {
       setInvalid(true);
     } else {
       setInvalid(false);
     }
-  }, [date, leader, eventName]);
+  }, [eventDate, leader, eventName]);
 
-  const handleSubmit = (e, data) => {
+  const handleSetData = ({ key, value }) => {
+    setData({
+      ...data,
+      [key]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(other);
+    console.log({ ...data, other });
   };
   return (
-    <div className="w-full max-w-xs m-4">
+    <div className="w-full max-w-md m-4">
       <form
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
         onSubmit={handleSubmit}
@@ -43,8 +54,10 @@ export default () => {
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={date}
-            onChange={({ target }) => setDate(target.value)}
+            value={eventDate}
+            onChange={({ target }) =>
+              handleSetData({ key: 'eventDate', value: target.value })
+            }
             id="date"
             name="date"
             type="date"
@@ -61,7 +74,9 @@ export default () => {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             value={eventName}
-            onChange={({ target }) => setEventName(target.value)}
+            onChange={({ target }) =>
+              handleSetData({ key: 'eventName', value: target.value })
+            }
             id="eventName"
             name="eventName"
             placeholder="Event Name"
@@ -78,7 +93,9 @@ export default () => {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             value={leader}
-            onChange={({ target }) => setLeader(target.value)}
+            onChange={({ target }) =>
+              handleSetData({ key: 'leader', value: target.value })
+            }
             id="leader"
             name="leader"
             placeholder="Leader"
@@ -95,7 +112,9 @@ export default () => {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             value={backups}
-            onChange={({ target }) => setBackups(target.value)}
+            onChange={({ target }) =>
+              handleSetData({ key: 'backups', value: target.value })
+            }
             id="backups"
             name="backups"
             placeholder="john, paul, luke"
@@ -111,7 +130,9 @@ export default () => {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             value={keys}
-            onChange={({ target }) => setKeys(target.value)}
+            onChange={({ target }) =>
+              handleSetData({ key: 'keys', value: target.value })
+            }
             id="keys"
             name="keys"
             placeholder="Keys"
@@ -127,7 +148,9 @@ export default () => {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             value={drums}
-            onChange={({ target }) => setDrums(target.value)}
+            onChange={({ target }) =>
+              handleSetData({ key: 'drums', value: target.value })
+            }
             id="drums"
             name="drums"
             placeholder="Drums"
@@ -143,7 +166,9 @@ export default () => {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             value={electricGuitar}
-            onChange={({ target }) => setElectricGuitar(target.value)}
+            onChange={({ target }) =>
+              handleSetData({ key: 'electricGuitar', value: target.value })
+            }
             id="electricGuitar"
             name="electricGuitar"
             placeholder="Electric Guitar"
@@ -159,7 +184,9 @@ export default () => {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             value={acousticGuitar}
-            onChange={({ target }) => setAcousticGuitar(target.value)}
+            onChange={({ target }) =>
+              handleSetData({ key: 'acousticGuitar', value: target.value })
+            }
             id="acousticGuitar"
             name="acousticGuitar"
             placeholder="Acoustic Guitar"
@@ -175,7 +202,9 @@ export default () => {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             value={bass}
-            onChange={({ target }) => setBass(target.value)}
+            onChange={({ target }) =>
+              handleSetData({ key: 'bass', value: target.value })
+            }
             id="bass"
             name="bass"
             placeholder="Bass"
@@ -187,7 +216,7 @@ export default () => {
             onClick={() =>
               setOther([...other, { name: '', instrument: '', uid: nanoid() }])
             }
-            class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+            className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
             type="button"
           >
             Add one
@@ -196,7 +225,7 @@ export default () => {
         <div className="mb-4">
           {other.length > 0 &&
             other.map((item) => (
-              <div className="border p-5 mb-4 bg-gray-100">
+              <div key={item.uid} className="border p-5 mb-4 bg-gray-100">
                 <div className="text-right text-red-500">
                   <button
                     onClick={() => {
@@ -273,4 +302,17 @@ export default () => {
       </form>
     </div>
   );
+};
+
+const DEFAULT_DATA = {
+  eventDate: '',
+  eventTitle: '',
+  leader: '',
+  backups: '',
+  keys: '',
+  electricGuitar: '',
+  acousticGuitar: '',
+  bass: '',
+  drums: '',
+  other: [],
 };
