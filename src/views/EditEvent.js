@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 const nanoid = require('nanoid');
 
+const ADD_EVENT_URL = 'http://localhost:8000/addEvent';
+
 export default () => {
+  const history = useHistory();
+
   const [data, setData] = useState(DEFAULT_DATA);
   const [other, setOther] = useState([]);
 
@@ -35,10 +40,31 @@ export default () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ ...data, other });
+
+    const response = await fetch(ADD_EVENT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...data, other }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => data)
+      .catch((err) => console.log(err));
+
+    if (response.error) {
+      setErrorMessage(response.error);
+    }
+
+    if (response.message === 'success') {
+      history.push('/');
+    }
   };
+
   return (
     <div className="w-full max-w-md m-4">
       <form
@@ -48,7 +74,7 @@ export default () => {
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="date"
+            htmlFor="eventDate"
           >
             Date
           </label>
@@ -58,8 +84,8 @@ export default () => {
             onChange={({ target }) =>
               handleSetData({ key: 'eventDate', value: target.value })
             }
-            id="date"
-            name="date"
+            id="eventDate"
+            name="eventDate"
             type="date"
             required
           />
@@ -117,7 +143,7 @@ export default () => {
             }
             id="backups"
             name="backups"
-            placeholder="john, paul, luke"
+            placeholder="John, Paul, Luke"
           />
         </div>
         <div className="mb-4">
@@ -306,7 +332,7 @@ export default () => {
 
 const DEFAULT_DATA = {
   eventDate: '',
-  eventTitle: '',
+  eventName: '',
   leader: '',
   backups: '',
   keys: '',
