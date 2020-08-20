@@ -3,7 +3,7 @@ import { capitalize } from '../helpers';
 
 export default ({
   eventDate,
-  eventTitle,
+  eventName,
   leader,
   backups,
   keys,
@@ -29,7 +29,7 @@ export default ({
               })}
             </p>
             <div className="text-gray-900 font-bold text-xl mb-2">
-              {capitalize(eventTitle)}
+              {capitalize(eventName)}
             </div>
             <p className="text-gray-700 text-base">
               <p>
