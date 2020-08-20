@@ -1,67 +1,77 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Event from './Event';
 import { getCachedUserData } from '../helpers';
 import Signin from './Signin';
 import { Link } from 'react-router-dom';
+import EventForm from '../components/EventForm';
 
-const mockData = [
-  {
-    id: '123',
-    createdBy: 'hannah joy',
-    createdAt: new Date(),
-    modifiedBy: null,
-    modifiedDate: null,
-    eventDate: new Date(),
-    eventTitle: 'Sunday service',
-    leader: 'Tin',
-    backups: 'alyssa, mark',
-    keys: 'hannah',
-    electricGuitar: 'derick',
-    acousticGuitar: 'euly',
-    bass: 'bricks',
-    drums: 'zion',
-    other: [{ name: 'lloyd', instrument: 'percussion', uid: 'asdf' }],
-  },
-  {
-    id: '123',
-    createdBy: 'hannah joy',
-    createdAt: new Date(),
-    modifiedBy: null,
-    modifiedDate: null,
-    eventDate: new Date(),
-    eventTitle: 'Sunday service',
-    leader: 'Tin',
-    backups: 'alyssa, mark',
-    keys: 'hannah',
-    electricGuitar: 'derick',
-    acousticGuitar: 'euly',
-    bass: 'bricks',
-    drums: 'zion',
-    other: [{ name: 'lloyd', instrument: 'percussion' }],
-  },
-  {
-    id: '123',
-    createdBy: 'hannah joy',
-    createdAt: new Date(),
-    modifiedBy: null,
-    modifiedDate: null,
-    eventDate: new Date(),
-    eventTitle: 'Sunday service',
-    leader: 'Tin',
-    backups: 'alyssa, mark',
-    keys: 'hannah',
-    electricGuitar: 'derick',
-    acousticGuitar: 'euly',
-    bass: 'bricks',
-    drums: 'zion',
-    other: [{ name: 'lloyd', instrument: 'percussion' }],
-  },
-];
+const ADD_EVENT_URL = 'http://localhost:8000/addEvent';
+const ALL_EVENTS_URL = 'http://localhost:8000/events';
 
 export default () => {
   const user = getCachedUserData();
+  const [activeEvent, setActiveEvent] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const response = await fetch(ALL_EVENTS_URL, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then(({ data }) => setEvents(data))
+        .catch((err) => console.log(err));
+      // TODO: add error handler
+      if (!response) return;
+    };
+    if (events.length === 0) {
+      fetchEvents();
+    }
+  }, [events]);
+
+  const handleSubmit = async (e, data) => {
+    e.preventDefault();
+    console.log({ e });
+    console.log({ data });
+    const response = await fetch(ADD_EVENT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...data }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => data)
+      .catch((err) => console.log(err));
+
+    if (response.error) {
+      setErrorMessage(response.error);
+    }
+
+    if (response.message === 'success') {
+      setActiveEvent(null);
+    }
+  };
 
   if (user && user.isVerified) {
+    if (activeEvent) {
+      return (
+        <EventForm
+          initialData={activeEvent}
+          onSubmit={handleSubmit}
+          onCancel={() => setActiveEvent(null)}
+        />
+      );
+    }
+    console.log(events);
     return (
       <div>
         <div className="flex justify-center">
@@ -72,10 +82,14 @@ export default () => {
           </Link>
         </div>
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 m-6">
-          {mockData.map((event) => (
-            <Link to={`/events/${event.id}`}>
+          {events.map((event) => (
+            <button
+              onClick={() => {
+                setActiveEvent(event);
+              }}
+            >
               <Event {...event} />
-            </Link>
+            </button>
           ))}
         </div>
       </div>

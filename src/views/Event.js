@@ -15,6 +15,7 @@ export default ({
   modifiedBy,
   createdBy,
   modifiedDate,
+  createdAt,
 }) => {
   return (
     <>
@@ -22,16 +23,16 @@ export default ({
         <div className="w-full border-r border-b border-l border-t border-gray-400 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col leading-normal">
           <div className="mb-8">
             <p className="text-sm text-gray-600 flex">
-              {eventDate.toLocaleString('en-US', {
+              {new Date(eventDate).toLocaleString('en-US', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
               })}
             </p>
-            <div className="text-gray-900 font-bold text-xl mb-2">
+            <div className="text-gray-900 font-bold text-xl mb-2 text-left">
               {capitalize(eventName)}
             </div>
-            <p className="text-gray-700 text-base">
+            <p className="text-gray-700 text-base text-left">
               <p>
                 <span className="pr-4" role="img" aria-label="mic">
                   🎤
@@ -86,20 +87,26 @@ export default ({
           </div>
           <div className="flex">
             <div className="text-sm text-left">
-              <p className="text-gray-900 leading-none">
-                {modifiedBy
-                  ? `last modified by: ${modifiedBy}`
-                  : `created by: ${capitalize(createdBy)}`}
-              </p>
+              {createdBy && (
+                <p className="text-gray-900 leading-none">
+                  {`created by: ${capitalize(createdBy)}`}
+                </p>
+              )}
               <p className="text-gray-600">
-                {modifiedDate
-                  ? `date: ${modifiedDate}`
-                  : `date: ${eventDate.toLocaleString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}`}
+                {`created: ${new Date(createdAt).toLocaleString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}`}
               </p>
+              {modifiedDate && (
+                <p className="text-gray-600">`modified: ${modifiedDate}`</p>
+              )}
+              {modifiedBy && (
+                <p className="text-gray-900 leading-none">
+                  {`last modified by: ${modifiedBy}`}
+                </p>
+              )}
             </div>
           </div>
         </div>
