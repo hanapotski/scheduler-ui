@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { formatDate } from '../helpers';
 const nanoid = require('nanoid');
 
 export default function EventForm({
@@ -58,7 +59,7 @@ export default function EventForm({
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={eventDate}
+            value={formatDate(eventDate)}
             onChange={({ target }) =>
               handleSetData({ key: 'eventDate', value: target.value })
             }

@@ -37,8 +37,6 @@ export default () => {
 
   const handleSubmit = async (e, data) => {
     e.preventDefault();
-    console.log({ e });
-    console.log({ data });
     const response = await fetch(ADD_EVENT_URL, {
       method: 'POST',
       headers: {
@@ -71,7 +69,7 @@ export default () => {
         />
       );
     }
-    console.log(events);
+
     return (
       <div>
         <div className="flex justify-center">

@@ -13,3 +13,7 @@ export function getCachedUserData() {
   const userData = localStorage.getItem('schedulerAppUser');
   return JSON.parse(userData) || null;
 }
+
+export function formatDate(date) {
+  return new Date(date).toISOString().slice(0, 10);
+}
