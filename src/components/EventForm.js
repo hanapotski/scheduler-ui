@@ -30,7 +30,7 @@ export default function EventForm({
   const modifiersStyles = {
     eventDate: {
       color: 'white',
-      backgroundColor: '#ffc107',
+      backgroundColor: '#4299e1',
     },
   };
 
