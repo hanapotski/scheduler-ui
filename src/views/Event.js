@@ -32,7 +32,7 @@ export default ({
             <div className="text-gray-900 font-bold text-xl mb-2 text-left">
               {capitalize(eventName)}
             </div>
-            <p className="text-gray-700 text-base text-left">
+            <div className="text-gray-700 text-base text-left">
               <p>
                 <span className="pr-4" role="img" aria-label="mic">
                   🎤
@@ -83,7 +83,7 @@ export default ({
                   {capitalize(instrument)}: {capitalize(name)}
                 </p>
               ))}
-            </p>
+            </div>
           </div>
           <div className="flex">
             <div className="text-sm text-left">
