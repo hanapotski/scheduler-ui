@@ -315,7 +315,9 @@ export default function EventForm({
           >
             Cancel
           </button>
-
+          <button className="bg-red-300 hover:bg-red-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+            Archive
+          </button>
           <button
             className={`bg-blue-${invalid ? 200 : 500} hover:bg-blue-${
               invalid ? 200 : 700
@@ -327,11 +329,6 @@ export default function EventForm({
           </button>
         </div>
       </form>
-      <div className="text-right mb-3">
-        <button className="bg-red-300 hover:bg-red-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-          Archive
-        </button>
-      </div>
     </div>
   );
 }
