@@ -14,7 +14,7 @@ export default ({
   other,
   modifiedBy,
   createdBy,
-  modifiedDate,
+  updatedAt,
   createdAt,
 }) => {
   return (
@@ -99,12 +99,18 @@ export default ({
                   day: 'numeric',
                 })}`}
               </p>
-              {modifiedDate && (
-                <p className="text-gray-600">`modified: ${modifiedDate}`</p>
+              {updatedAt && (
+                <p className="text-gray-600">{`modified: ${new Date(
+                  updatedAt
+                ).toLocaleString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}`}</p>
               )}
               {modifiedBy && (
                 <p className="text-gray-900 leading-none">
-                  {`last modified by: ${modifiedBy}`}
+                  {`modified by: ${modifiedBy}`}
                 </p>
               )}
             </div>

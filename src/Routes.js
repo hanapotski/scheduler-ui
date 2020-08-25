@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AllEvents from './views/AllEvents';
 import Home from './views/Home';
 
-import EditEvent from './views/EditEvent';
+import AddEvent from './views/AddEvent';
 import Signup from './views/Signup';
 import MainWrapper from './components/MainWrapper';
 
@@ -19,7 +19,7 @@ function App() {
             <AllEvents />
           </Route>
           <Route path="/event/:id">
-            <EditEvent />
+            <AddEvent />
           </Route>
           <Route path="/signup">
             <Signup />
