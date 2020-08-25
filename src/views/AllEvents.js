@@ -56,6 +56,14 @@ export default () => {
     }
 
     if (response.message === 'success') {
+      const newEvents = events.map((event) => {
+        if (event.id === data.id) {
+          return { ...event, ...data };
+        } else {
+          return event;
+        }
+      });
+      setEvents(newEvents);
       setActiveEvent(null);
     }
   };
