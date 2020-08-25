@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { formatDate } from '../helpers';
+import DayPicker from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 const nanoid = require('nanoid');
 
 export default function EventForm({
@@ -10,7 +11,6 @@ export default function EventForm({
 }) {
   const [data, setData] = useState({ ...DEFAULT_DATA, ...initialData });
   const [other, setOther] = useState([]);
-
   const {
     eventDate,
     eventName,
@@ -22,6 +22,17 @@ export default function EventForm({
     acousticGuitar,
     bass,
   } = data;
+
+  const modifiers = {
+    eventDate: new Date(eventDate),
+  };
+
+  const modifiersStyles = {
+    eventDate: {
+      color: 'white',
+      backgroundColor: '#ffc107',
+    },
+  };
 
   const [invalid, setInvalid] = useState(true);
 
@@ -57,17 +68,18 @@ export default function EventForm({
           >
             Date
           </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={formatDate(eventDate)}
-            onChange={({ target }) =>
-              handleSetData({ key: 'eventDate', value: target.value })
-            }
-            id="eventDate"
-            name="eventDate"
-            type="date"
-            required
-          />
+          <div className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <div className="text-center">
+              <DayPicker
+                onDayClick={(value) => {
+                  handleSetData({ key: 'eventDate', value });
+                }}
+                selectedDay={eventDate}
+                modifiers={modifiers}
+                modifiersStyles={modifiersStyles}
+              />
+            </div>
+          </div>
         </div>
         <div className="mb-4">
           <label
@@ -320,7 +332,7 @@ export default function EventForm({
 }
 
 const DEFAULT_DATA = {
-  eventDate: '',
+  eventDate: new Date(),
   eventName: '',
   leader: '',
   backups: '',
