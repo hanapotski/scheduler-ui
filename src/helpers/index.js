@@ -2,6 +2,7 @@ export function capitalize(str) {
   if (!str) return;
   if (str.split(' ').length > 1) {
     return str
+      .trim()
       .split(' ')
       .map((word) => `${word[0].toUpperCase()}${word.slice(1)}`)
       .join(' ');
@@ -12,8 +13,4 @@ export function capitalize(str) {
 export function getCachedUserData() {
   const userData = localStorage.getItem('schedulerAppUser');
   return JSON.parse(userData) || null;
-}
-
-export function formatDate(date) {
-  return new Date(date).toISOString().slice(0, 10);
 }
