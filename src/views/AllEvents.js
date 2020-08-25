@@ -7,6 +7,7 @@ import EventForm from '../components/EventForm';
 
 const UPDATE_EVENT_URL = 'http://localhost:8000/updateEvent';
 const ALL_EVENTS_URL = 'http://localhost:8000/events';
+const ARCHIVE_EVENT_URL = 'http://localhost:8000/archiveEvent';
 
 export default () => {
   const user = getCachedUserData();
@@ -59,6 +60,32 @@ export default () => {
     }
   };
 
+  const handleArchive = async (e, data) => {
+    e.preventDefault();
+    const response = await fetch(ARCHIVE_EVENT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...data, archived: true }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => data)
+      .catch((err) => console.log(err));
+
+    if (!response) return;
+
+    if (response.error) {
+      setErrorMessage(response.error);
+    }
+
+    if (response.message === 'success') {
+      setActiveEvent(null);
+    }
+  };
+
   if (user && user.isVerified) {
     if (activeEvent) {
       return (
@@ -66,6 +93,7 @@ export default () => {
           initialData={activeEvent}
           onSubmit={handleSubmit}
           onCancel={() => setActiveEvent(null)}
+          onArchive={handleArchive}
         />
       );
     }

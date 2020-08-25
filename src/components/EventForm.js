@@ -8,6 +8,7 @@ export default function EventForm({
   onSubmit,
   errorMessage,
   onCancel,
+  onArchive,
 }) {
   const [data, setData] = useState({ ...DEFAULT_DATA, ...initialData });
   const [other, setOther] = useState([]);
