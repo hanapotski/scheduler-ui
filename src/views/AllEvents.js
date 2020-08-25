@@ -5,14 +5,14 @@ import Signin from './Signin';
 import { Link } from 'react-router-dom';
 import EventForm from '../components/EventForm';
 
-const ADD_EVENT_URL = 'http://localhost:8000/addEvent';
+const UPDATE_EVENT_URL = 'http://localhost:8000/updateEvent';
 const ALL_EVENTS_URL = 'http://localhost:8000/events';
 
 export default () => {
   const user = getCachedUserData();
   const [activeEvent, setActiveEvent] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState(null);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -30,15 +30,15 @@ export default () => {
       // TODO: add error handler
       if (!response) return;
     };
-    if (events.length === 0) {
+    if (!events) {
       fetchEvents();
     }
   }, [events]);
 
   const handleSubmit = async (e, data) => {
     e.preventDefault();
-    const response = await fetch(ADD_EVENT_URL, {
-      method: 'POST',
+    const response = await fetch(UPDATE_EVENT_URL, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -80,15 +80,16 @@ export default () => {
           </Link>
         </div>
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 m-6">
-          {events.map((event) => (
-            <button
-              onClick={() => {
-                setActiveEvent(event);
-              }}
-            >
-              <Event {...event} />
-            </button>
-          ))}
+          {events &&
+            events.map((event) => (
+              <button
+                onClick={() => {
+                  setActiveEvent(event);
+                }}
+              >
+                <Event {...event} />
+              </button>
+            ))}
         </div>
       </div>
     );
