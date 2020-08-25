@@ -26,7 +26,7 @@ export default () => {
         .then((res) => {
           return res.json();
         })
-        .then(({ data }) => setEvents(data))
+        .then(({ data }) => setEvents(data.filter((event) => !event.archived)))
         .catch((err) => console.log(err));
       // TODO: add error handler
       if (!response) return;
@@ -57,7 +57,7 @@ export default () => {
 
     if (response.message === 'success') {
       const newEvents = events.map((event) => {
-        if (event.id === data.id) {
+        if (event._id === data._id) {
           return { ...event, ...data };
         } else {
           return event;
@@ -68,14 +68,14 @@ export default () => {
     }
   };
 
-  const handleArchive = async (e, data) => {
+  const handleArchive = async (e) => {
     e.preventDefault();
     const response = await fetch(ARCHIVE_EVENT_URL, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ ...data, archived: true }),
+      body: JSON.stringify({ ...activeEvent, archived: true }),
     })
       .then((res) => {
         return res.json();
@@ -90,6 +90,8 @@ export default () => {
     }
 
     if (response.message === 'success') {
+      const newEvents = events.filter((event) => event._id !== activeEvent._id);
+      setEvents(newEvents);
       setActiveEvent(null);
     }
   };
@@ -122,6 +124,7 @@ export default () => {
                 onClick={() => {
                   setActiveEvent(event);
                 }}
+                key={event._id}
               >
                 <Event {...event} />
               </button>
