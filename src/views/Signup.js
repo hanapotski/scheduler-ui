@@ -10,22 +10,23 @@ export default () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [invalid, setInvalid] = useState(true);
 
   const [accountPending, setAccountPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (email === '' || password === '') {
+    if (email === '' || password === '' || name === '') {
       setInvalid(true);
     } else {
       setInvalid(false);
     }
-  }, [email, password]);
+  }, [email, password, name]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = { email, password };
+    const data = { email, password, name };
     const response = await fetch(SIGNUP_URL, {
       method: 'POST',
       headers: {
@@ -62,6 +63,24 @@ export default () => {
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
         onSubmit={handleSubmit}
       >
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="name"
+          >
+            Name
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            value={name}
+            onChange={({ target }) => setName(target.value)}
+            id="name"
+            type="name"
+            name="name"
+            placeholder="Name"
+            required
+          />
+        </div>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
