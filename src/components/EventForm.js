@@ -22,6 +22,7 @@ export default function EventForm({
     electricGuitar,
     acousticGuitar,
     bass,
+    lineup,
   } = data;
 
   const modifiers = {
@@ -229,6 +230,26 @@ export default function EventForm({
           />
         </div>
         <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="lineup"
+          >
+            Lineup
+          </label>
+          <textarea
+            rows="4"
+            // cols="50"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            value={lineup}
+            onChange={({ target }) =>
+              handleSetData({ key: 'lineup', value: target.value })
+            }
+            id="lineup"
+            name="lineup"
+            placeholder="Lineup"
+          />
+        </div>
+        <div className="mb-4">
           <h3>Other</h3>
           <button
             onClick={() =>
@@ -350,4 +371,5 @@ const DEFAULT_DATA = {
   bass: '',
   drums: '',
   other: [],
+  Lineup: '',
 };

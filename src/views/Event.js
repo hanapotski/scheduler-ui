@@ -16,6 +16,7 @@ export default ({
   createdBy,
   updatedAt,
   createdAt,
+  lineup,
 }) => {
   return (
     <>
@@ -74,6 +75,12 @@ export default ({
                   🎸
                 </span>
                 Bass: {capitalize(bass)}
+              </p>
+              <p>
+                <span className="pr-4" role="img" aria-label="guitar">
+                  🧾
+                </span>
+                Lineup: {capitalize(lineup)}
               </p>
               {other.map(({ name, instrument }) => (
                 <p>

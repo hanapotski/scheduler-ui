@@ -26,7 +26,10 @@ export default () => {
         .then((res) => {
           return res.json();
         })
-        .then(({ data }) => setEvents(data.filter((event) => !event.archived)))
+        .then(({ data }) => {
+          if (!data) return;
+          setEvents(data.filter((event) => !event.archived));
+        })
         .catch((err) => console.log(err));
       // TODO: add error handler
       if (!response) return;
