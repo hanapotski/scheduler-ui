@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import EventForm from '../components/EventForm';
+import { BASE_URL } from '../helpers/constants';
 
-const ADD_EVENT_URL = 'http://localhost:8000/addEvent';
-const ARCHIVE_EVENT_URL = 'http://localhost:8000/archiveEvent';
+const ADD_EVENT_URL = `${BASE_URL}/addEvent`;
 
 export default () => {
   const history = useHistory();

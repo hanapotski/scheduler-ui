@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Notification from '../components/Notification';
+import { BASE_URL } from '../helpers/constants';
 
-const SIGNUP_URL = 'http://localhost:8000/signup';
+const SIGNUP_URL = `${BASE_URL}/signup`;
 
 export default () => {
   const history = useHistory();
