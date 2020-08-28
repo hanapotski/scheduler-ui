@@ -79,9 +79,18 @@ export default ({
               <p>
                 <span className="pr-4" role="img" aria-label="guitar">
                   🧾
-                </span>
-                Lineup: {capitalize(lineup)}
+                </span>{' '}
+                Lineup:
               </p>
+              <textarea
+                rows="4"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-2"
+                value={capitalize(lineup)}
+                id="lineup"
+                name="lineup"
+                placeholder="Lineup"
+                readOnly
+              />
               {other.map(({ name, instrument }) => (
                 <p>
                   <span className="pr-4" role="img" aria-label="musical notes">

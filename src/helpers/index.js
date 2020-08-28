@@ -1,5 +1,5 @@
 export function capitalize(str) {
-  if (!str) return;
+  if (!str || str === '') return '';
   if (str.split(' ').length > 1) {
     return str
       .trim()
