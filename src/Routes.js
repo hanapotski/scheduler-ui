@@ -7,9 +7,11 @@ import AddEvent from './views/AddEvent';
 import Signup from './views/Signup';
 import MainWrapper from './components/MainWrapper';
 
+const BASE_NAME = process.env.PUBLIC_URL || 'https://localhost:3000';
+
 function App() {
   return (
-    <Router>
+    <Router basename={`${BASE_NAME}/`}>
       <MainWrapper>
         <Switch>
           <Route exact path="/">
