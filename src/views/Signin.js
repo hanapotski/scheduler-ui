@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Notification from '../components/Notification';
-import { BASE_URL } from '../helpers/constants';
-
-const SIGNIN_URL = `${BASE_URL}/signin`;
+import { SIGNIN_URL } from '../helpers/constants';
 
 export default ({ setLogin }) => {
   const history = useHistory();

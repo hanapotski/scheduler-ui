@@ -4,11 +4,7 @@ import { getCachedUserData } from '../helpers';
 import Signin from './Signin';
 import { Link } from 'react-router-dom';
 import EventForm from '../components/EventForm';
-import { BASE_URL } from '../helpers/constants';
-
-const UPDATE_EVENT_URL = `${BASE_URL}/updateEvent`;
-const ALL_EVENTS_URL = `${BASE_URL}/events`;
-const ARCHIVE_EVENT_URL = `${BASE_URL}/archiveEvent`;
+import { ARCHIVE_EVENT_URL, ALL_EVENTS_URL, UPDATE_EVENT_URL } from '../helpers/constants';
 
 export default () => {
   const user = getCachedUserData();
